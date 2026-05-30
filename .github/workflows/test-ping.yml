@@ -1,0 +1,38 @@
+name: test ping
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: send Telegram test message
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          if [ -z "$TELEGRAM_BOT_TOKEN" ] || [ -z "$TELEGRAM_CHAT_ID" ]; then
+            echo "missing TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID" ; exit 1
+          fi
+          MSG="*Validator watchdog wired up* ✓
+
+          - Source: \`ethereum-beacon-api.publicnode.com\` (free, no key)
+          - Source: \`explorer.consensus.mainnet.lukso.network\`
+          - Schedule: hourly at \`:17\`
+          - Dashboard: https://soullight.github.io/validator-monitor/
+
+          You will get a Telegram alert here only when something is wrong (slashed / status flip / balance below floor / source down). Otherwise this is the last message you'll see from me until that happens."
+
+          curl -sS \
+            -X POST \
+            --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
+            --data-urlencode "text=${MSG}" \
+            --data-urlencode "parse_mode=Markdown" \
+            --data-urlencode "disable_web_page_preview=true" \
+            "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" | head -c 400
+          echo
