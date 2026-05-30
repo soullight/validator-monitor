@@ -1,0 +1,18 @@
+{
+  "checked_at": "2026-05-30T03:50:41.959214+00:00",
+  "checked_at_human": "2026-05-30 03:50 UTC",
+  "validators": [
+    {
+      "chain": "lukso",
+      "label": "humbly-flying-dove",
+      "pubkey": "0xa2e5a4723655a8baf3411300d3ff3622903b6a7f79f85fc41193bd83f51afa284a2c8d055e2b0c54c7b46871a8f905cf",
+      "status": "active_ongoing",
+      "balance_lyx": 31.8761,
+      "slashed": false
+    }
+  ],
+  "issues": [
+    "\u274c ETH explorer fetch failed: `HTTP Error 403: Forbidden`"
+  ],
+  "status": "alert"
+}

@@ -1,0 +1,45 @@
+name: validator watchdog
+
+on:
+  schedule:
+    - cron: '17 * * * *'   # every hour at :17 (off-the-hour to avoid GH cron congestion)
+  workflow_dispatch:        # lets you fire it manually from the Actions tab
+
+permissions:
+  contents: write           # needed to commit docs/state.json back to main
+
+concurrency:
+  group: watchdog
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: run check
+        id: check
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          BEACONCHAIN_API_KEY: ${{ secrets.BEACONCHAIN_API_KEY }}
+          HEALTHCHECK_URL: ${{ secrets.HEALTHCHECK_URL }}
+        run: python3 check.py
+        continue-on-error: true
+
+      - name: commit state.json for dashboard
+        if: always()
+        run: |
+          git config user.name "validator-watchdog"
+          git config user.email "watchdog@noreply.github.com"
+          git add docs/state.json
+          if ! git diff --cached --quiet; then
+            git commit -m "state: $(date -u +%Y-%m-%dT%H:%MZ)"
+            git push
+          fi
+
+      - name: propagate failure
+        if: steps.check.outcome == 'failure'
+        run: exit 1
