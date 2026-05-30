@@ -60,8 +60,11 @@ def http_get_json(url, headers=None, timeout=20):
 
 
 def telegram(msg: str) -> None:
-    if not (TELEGRAM_TOKEN and TELEGRAM_CHAT):
-        print(f"[telegram-skip] {msg}", file=sys.stderr)
+    if not TELEGRAM_TOKEN:
+        print(f"[telegram-skip-no-token] {msg}", file=sys.stderr)
+        return
+    if not TELEGRAM_CHAT:
+        print(f"[telegram-skip-no-chat-id] {msg}", file=sys.stderr)
         return
     payload = json.dumps({
         "chat_id": TELEGRAM_CHAT,
@@ -77,6 +80,43 @@ def telegram(msg: str) -> None:
         urllib.request.urlopen(req, timeout=15).read()
     except Exception as e:
         print(f"[telegram-error] {e}", file=sys.stderr)
+
+
+def discover_chat_ids() -> None:
+    """Bootstrap helper: when TELEGRAM_BOT_TOKEN is set but TELEGRAM_CHAT_ID is
+    not, hit getUpdates and print discovered chat IDs to stdout so the operator
+    can set the missing secret. No-op when both or neither are set.
+    """
+    if not TELEGRAM_TOKEN or TELEGRAM_CHAT:
+        return
+    try:
+        updates = http_get_json(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/getUpdates")
+    except Exception as e:
+        print(f"[discovery-error] {e}", file=sys.stderr)
+        return
+    chats = {}
+    for u in updates.get("result", []):
+        m = u.get("message") or u.get("edited_message") or u.get("channel_post") or {}
+        c = m.get("chat") or {}
+        cid = c.get("id")
+        if cid is not None:
+            label = c.get("title") or c.get("first_name") or c.get("username") or "?"
+            chats[cid] = label
+    print("=" * 60)
+    print("TELEGRAM_CHAT_ID DISCOVERY")
+    print("=" * 60)
+    if not chats:
+        print("No chats found.")
+        print("Fix: in Telegram, open your bot (the username you set with")
+        print("BotFather, e.g. @Validatorwatchdogbot), send any message (like")
+        print("'hi'), then re-run this workflow.")
+    else:
+        print("Found these chats your bot can see:")
+        for cid, label in chats.items():
+            print(f"  chat_id={cid}  ({label})")
+        print()
+        print("Set TELEGRAM_CHAT_ID to the number above and re-run.")
+    print("=" * 60)
 
 
 # ── Price ─────────────────────────────────────────────────────────────────────
@@ -181,6 +221,9 @@ def check_lukso(lyx_price_usd):
 
 # ── Main ──────────────────────────────────────────────────────────────────────
 def main() -> int:
+    # Bootstrap path: print discovered chat IDs and bail when token-set/chat-unset.
+    discover_chat_ids()
+
     now = datetime.now(timezone.utc)
     prices = fetch_prices()
     state = {
