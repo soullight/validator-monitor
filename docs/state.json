@@ -1,18 +1,88 @@
 {
-  "checked_at": "2026-05-30T03:50:41.959214+00:00",
-  "checked_at_human": "2026-05-30 03:50 UTC",
+  "checked_at": "2026-05-30T04:30:13.481027+00:00",
+  "checked_at_human": "2026-05-30 04:30 UTC",
+  "prices": {
+    "eth_usd": 2007.26,
+    "lyx_usd": 0.206066
+  },
   "validators": [
+    {
+      "chain": "ethereum",
+      "label": "eth-1165884",
+      "index": 1165884,
+      "status": "active_ongoing",
+      "balance": 31.955081,
+      "balance_unit": "ETH",
+      "rewards": -0.044919,
+      "value_usd": 64142.16,
+      "rewards_usd": -90.16,
+      "slashed": false,
+      "explorer_url": "https://beaconcha.in/validator/1165884"
+    },
+    {
+      "chain": "ethereum",
+      "label": "eth-1998776",
+      "index": 1998776,
+      "status": "active_ongoing",
+      "balance": 31.952372,
+      "balance_unit": "ETH",
+      "rewards": -0.047628,
+      "value_usd": 64136.72,
+      "rewards_usd": -95.6,
+      "slashed": false,
+      "explorer_url": "https://beaconcha.in/validator/1998776"
+    },
+    {
+      "chain": "ethereum",
+      "label": "eth-1998777",
+      "index": 1998777,
+      "status": "active_ongoing",
+      "balance": 31.952367,
+      "balance_unit": "ETH",
+      "rewards": -0.047633,
+      "value_usd": 64136.71,
+      "rewards_usd": -95.61,
+      "slashed": false,
+      "explorer_url": "https://beaconcha.in/validator/1998777"
+    },
+    {
+      "chain": "ethereum",
+      "label": "eth-1998923",
+      "index": 1998923,
+      "status": "active_ongoing",
+      "balance": 31.952348,
+      "balance_unit": "ETH",
+      "rewards": -0.047652,
+      "value_usd": 64136.67,
+      "rewards_usd": -95.65,
+      "slashed": false,
+      "explorer_url": "https://beaconcha.in/validator/1998923"
+    },
     {
       "chain": "lukso",
       "label": "humbly-flying-dove",
       "pubkey": "0xa2e5a4723655a8baf3411300d3ff3622903b6a7f79f85fc41193bd83f51afa284a2c8d055e2b0c54c7b46871a8f905cf",
       "status": "active_ongoing",
-      "balance_lyx": 31.8761,
-      "slashed": false
+      "balance": 31.876205,
+      "balance_unit": "LYX",
+      "rewards": -0.123795,
+      "value_usd": 6.57,
+      "rewards_usd": -0.03,
+      "slashed": false,
+      "explorer_url": "https://explorer.consensus.mainnet.lukso.network/validator/0xa2e5a4723655a8baf3411300d3ff3622903b6a7f79f85fc41193bd83f51afa284a2c8d055e2b0c54c7b46871a8f905cf"
     }
   ],
-  "issues": [
-    "\u274c ETH explorer fetch failed: `HTTP Error 403: Forbidden`"
-  ],
-  "status": "alert"
+  "issues": [],
+  "totals": {
+    "validators": 5,
+    "eth_count": 4,
+    "lukso_count": 1,
+    "eth_balance": 127.8122,
+    "lyx_balance": 31.8762,
+    "eth_rewards": -0.1878,
+    "lyx_rewards": -0.1238,
+    "value_usd": 256558.83,
+    "rewards_usd": -377.05
+  },
+  "status": "ok"
 }
