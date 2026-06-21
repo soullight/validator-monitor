@@ -1,9 +1,9 @@
 {
-  "checked_at": "2026-06-20T23:41:55.278736+00:00",
-  "checked_at_human": "2026-06-20 23:41 UTC",
+  "checked_at": "2026-06-21T01:31:02.522412+00:00",
+  "checked_at_human": "2026-06-21 01:31 UTC",
   "prices": {
-    "eth_usd": 1740.14,
-    "lyx_usd": 0.281054
+    "eth_usd": 1733.38,
+    "lyx_usd": 0.268302
   },
   "validators": [
     {
@@ -11,11 +11,11 @@
       "label": "eth-1165884",
       "index": 1165884,
       "status": "active_ongoing",
-      "balance": 31.995618,
+      "balance": 31.995762,
       "balance_unit": "ETH",
-      "rewards": -0.004382,
-      "value_usd": 55676.85,
-      "rewards_usd": -7.63,
+      "rewards": -0.004238,
+      "value_usd": 55460.81,
+      "rewards_usd": -7.35,
       "slashed": false,
       "explorer_url": "https://beaconcha.in/validator/1165884"
     },
@@ -24,11 +24,11 @@
       "label": "eth-1998776",
       "index": 1998776,
       "status": "active_ongoing",
-      "balance": 31.992956,
+      "balance": 31.993102,
       "balance_unit": "ETH",
-      "rewards": -0.007044,
-      "value_usd": 55672.22,
-      "rewards_usd": -12.26,
+      "rewards": -0.006898,
+      "value_usd": 55456.2,
+      "rewards_usd": -11.96,
       "slashed": false,
       "explorer_url": "https://beaconcha.in/validator/1998776"
     },
@@ -37,11 +37,11 @@
       "label": "eth-1998777",
       "index": 1998777,
       "status": "active_ongoing",
-      "balance": 31.992997,
+      "balance": 31.993144,
       "balance_unit": "ETH",
-      "rewards": -0.007003,
-      "value_usd": 55672.29,
-      "rewards_usd": -12.19,
+      "rewards": -0.006856,
+      "value_usd": 55456.28,
+      "rewards_usd": -11.88,
       "slashed": false,
       "explorer_url": "https://beaconcha.in/validator/1998777"
     },
@@ -50,11 +50,11 @@
       "label": "eth-1998923",
       "index": 1998923,
       "status": "active_ongoing",
-      "balance": 31.992876,
+      "balance": 31.99302,
       "balance_unit": "ETH",
-      "rewards": -0.007124,
-      "value_usd": 55672.08,
-      "rewards_usd": -12.4,
+      "rewards": -0.00698,
+      "value_usd": 55456.06,
+      "rewards_usd": -12.1,
       "slashed": false,
       "explorer_url": "https://beaconcha.in/validator/1998923"
     },
@@ -63,10 +63,10 @@
       "label": "humbly-flying-dove",
       "pubkey": "0xa2e5a4723655a8baf3411300d3ff3622903b6a7f79f85fc41193bd83f51afa284a2c8d055e2b0c54c7b46871a8f905cf",
       "status": "active_ongoing",
-      "balance": 31.954652,
+      "balance": 31.954982,
       "balance_unit": "LYX",
-      "rewards": -0.045348,
-      "value_usd": 8.98,
+      "rewards": -0.045018,
+      "value_usd": 8.57,
       "rewards_usd": -0.01,
       "slashed": false,
       "explorer_url": "https://explorer.consensus.mainnet.lukso.network/validator/0xa2e5a4723655a8baf3411300d3ff3622903b6a7f79f85fc41193bd83f51afa284a2c8d055e2b0c54c7b46871a8f905cf"
@@ -77,12 +77,12 @@
     "validators": 5,
     "eth_count": 4,
     "lukso_count": 1,
-    "eth_balance": 127.9744,
-    "lyx_balance": 31.9547,
-    "eth_rewards": -0.0256,
-    "lyx_rewards": -0.0453,
-    "value_usd": 222702.42,
-    "rewards_usd": -44.49
+    "eth_balance": 127.975,
+    "lyx_balance": 31.955,
+    "eth_rewards": -0.025,
+    "lyx_rewards": -0.045,
+    "value_usd": 221837.92,
+    "rewards_usd": -43.3
   },
   "status": "ok"
 }
