@@ -1,9 +1,9 @@
 {
-  "checked_at": "2026-08-07T10:09:22.770026+00:00",
-  "checked_at_human": "2026-08-07 10:09 UTC",
+  "checked_at": "2026-08-07T11:05:53.026736+00:00",
+  "checked_at_human": "2026-08-07 11:05 UTC",
   "prices": {
     "eth_usd": 1913.1,
-    "lyx_usd": 0.200778
+    "lyx_usd": 0.203292
   },
   "validators": [
     {
@@ -63,10 +63,10 @@
       "label": "humbly-flying-dove",
       "pubkey": "0xa2e5a4723655a8baf3411300d3ff3622903b6a7f79f85fc41193bd83f51afa284a2c8d055e2b0c54c7b46871a8f905cf",
       "status": "active_ongoing",
-      "balance": 31.981779,
+      "balance": 31.981796,
       "balance_unit": "LYX",
-      "rewards": -0.018221,
-      "value_usd": 6.42,
+      "rewards": -0.018204,
+      "value_usd": 6.5,
       "rewards_usd": -0.0,
       "slashed": false,
       "explorer_url": "https://explorer.consensus.mainnet.lukso.network/validator/0xa2e5a4723655a8baf3411300d3ff3622903b6a7f79f85fc41193bd83f51afa284a2c8d055e2b0c54c7b46871a8f905cf"
@@ -86,7 +86,7 @@
     "lyx_balance": 31.9818,
     "eth_rewards": -95.9991,
     "lyx_rewards": -0.0182,
-    "value_usd": 61227.36,
+    "value_usd": 61227.44,
     "rewards_usd": -183655.86
   },
   "status": "alert"
