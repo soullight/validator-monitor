@@ -1,9 +1,9 @@
 {
-  "checked_at": "2026-08-25T18:55:26.896552+00:00",
-  "checked_at_human": "2026-08-25 18:55 UTC",
+  "checked_at": "2026-08-25T19:44:43.378020+00:00",
+  "checked_at_human": "2026-08-25 19:44 UTC",
   "prices": {
-    "eth_usd": 2465.89,
-    "lyx_usd": 0.225898
+    "eth_usd": 2457.23,
+    "lyx_usd": 0.225952
   },
   "validators": [
     {
@@ -15,7 +15,7 @@
       "balance_unit": "ETH",
       "rewards": -32.0,
       "value_usd": 0.0,
-      "rewards_usd": -78908.48,
+      "rewards_usd": -78631.36,
       "slashed": false,
       "explorer_url": "https://beaconcha.in/validator/1165884"
     },
@@ -28,7 +28,7 @@
       "balance_unit": "ETH",
       "rewards": -32.0,
       "value_usd": 0.0,
-      "rewards_usd": -78908.48,
+      "rewards_usd": -78631.36,
       "slashed": false,
       "explorer_url": "https://beaconcha.in/validator/1998776"
     },
@@ -41,7 +41,7 @@
       "balance_unit": "ETH",
       "rewards": -32.0,
       "value_usd": 0.0,
-      "rewards_usd": -78908.48,
+      "rewards_usd": -78631.36,
       "slashed": false,
       "explorer_url": "https://beaconcha.in/validator/1998777"
     },
@@ -54,7 +54,7 @@
       "balance_unit": "ETH",
       "rewards": -32.0,
       "value_usd": 0.0,
-      "rewards_usd": -78908.48,
+      "rewards_usd": -78631.36,
       "slashed": false,
       "explorer_url": "https://beaconcha.in/validator/1998923"
     },
@@ -63,9 +63,9 @@
       "label": "humbly-flying-dove",
       "pubkey": "0xa2e5a4723655a8baf3411300d3ff3622903b6a7f79f85fc41193bd83f51afa284a2c8d055e2b0c54c7b46871a8f905cf",
       "status": "active_ongoing",
-      "balance": 32.004793,
+      "balance": 32.004922,
       "balance_unit": "LYX",
-      "rewards": 0.004793,
+      "rewards": 0.004922,
       "value_usd": 7.23,
       "rewards_usd": 0.0,
       "slashed": false,
@@ -83,11 +83,11 @@
     "eth_count": 4,
     "lukso_count": 1,
     "eth_balance": 0.0,
-    "lyx_balance": 32.0048,
+    "lyx_balance": 32.0049,
     "eth_rewards": -128.0,
-    "lyx_rewards": 0.0048,
+    "lyx_rewards": 0.0049,
     "value_usd": 7.23,
-    "rewards_usd": -315633.92
+    "rewards_usd": -314525.44
   },
   "status": "alert"
 }
