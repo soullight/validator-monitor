@@ -1,9 +1,9 @@
 {
-  "checked_at": "2026-10-17T01:18:14.316673+00:00",
-  "checked_at_human": "2026-10-17 01:18 UTC",
+  "checked_at": "2026-10-17T06:55:42.220798+00:00",
+  "checked_at_human": "2026-10-17 06:55 UTC",
   "prices": {
-    "eth_usd": 2419.92,
-    "lyx_usd": 0.234919
+    "eth_usd": 2429.5,
+    "lyx_usd": 0.236545
   },
   "validators": [
     {
@@ -15,7 +15,7 @@
       "balance_unit": "ETH",
       "rewards": -32.0,
       "value_usd": 0.0,
-      "rewards_usd": -77437.44,
+      "rewards_usd": -77744.0,
       "slashed": false,
       "explorer_url": "https://beaconcha.in/validator/1165884"
     },
@@ -28,7 +28,7 @@
       "balance_unit": "ETH",
       "rewards": -32.0,
       "value_usd": 0.0,
-      "rewards_usd": -77437.44,
+      "rewards_usd": -77744.0,
       "slashed": false,
       "explorer_url": "https://beaconcha.in/validator/1998776"
     },
@@ -41,7 +41,7 @@
       "balance_unit": "ETH",
       "rewards": -32.0,
       "value_usd": 0.0,
-      "rewards_usd": -77437.44,
+      "rewards_usd": -77744.0,
       "slashed": false,
       "explorer_url": "https://beaconcha.in/validator/1998777"
     },
@@ -54,7 +54,7 @@
       "balance_unit": "ETH",
       "rewards": -32.0,
       "value_usd": 0.0,
-      "rewards_usd": -77437.44,
+      "rewards_usd": -77744.0,
       "slashed": false,
       "explorer_url": "https://beaconcha.in/validator/1998923"
     },
@@ -63,10 +63,10 @@
       "label": "humbly-flying-dove",
       "pubkey": "0xa2e5a4723655a8baf3411300d3ff3622903b6a7f79f85fc41193bd83f51afa284a2c8d055e2b0c54c7b46871a8f905cf",
       "status": "active_ongoing",
-      "balance": 32.001373,
+      "balance": 32.00012,
       "balance_unit": "LYX",
-      "rewards": 0.001373,
-      "value_usd": 7.52,
+      "rewards": 0.00012,
+      "value_usd": 7.57,
       "rewards_usd": 0.0,
       "slashed": false,
       "explorer_url": "https://explorer.consensus.mainnet.lukso.network/validator/0xa2e5a4723655a8baf3411300d3ff3622903b6a7f79f85fc41193bd83f51afa284a2c8d055e2b0c54c7b46871a8f905cf"
@@ -83,11 +83,11 @@
     "eth_count": 4,
     "lukso_count": 1,
     "eth_balance": 0.0,
-    "lyx_balance": 32.0014,
+    "lyx_balance": 32.0001,
     "eth_rewards": -128.0,
-    "lyx_rewards": 0.0014,
-    "value_usd": 7.52,
-    "rewards_usd": -309749.76
+    "lyx_rewards": 0.0001,
+    "value_usd": 7.57,
+    "rewards_usd": -310976.0
   },
   "status": "alert"
 }
