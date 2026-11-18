@@ -150,7 +150,7 @@ def check_eth(eth_price_usd):
         balance_gwei = int(r["balance"])
         balance_eth = balance_gwei / 1e9
         slashed = bool(v.get("slashed", False))
-        rewards_eth = balance_eth - ETH_ACTIVATION_BALANCE
+        rewards_eth = None if status == "withdrawal_done" else balance_eth - ETH_ACTIVATION_BALANCE
         results.append({
             "chain": "ethereum",
             "label": f"eth-{idx}",
@@ -158,9 +158,9 @@ def check_eth(eth_price_usd):
             "status": status,
             "balance": round(balance_eth, 6),
             "balance_unit": "ETH",
-            "rewards": round(rewards_eth, 6),
+            "rewards": round(rewards_eth, 6) if rewards_eth is not None else None,
             "value_usd": round(balance_eth * eth_price_usd, 2) if eth_price_usd else None,
-            "rewards_usd": round(rewards_eth * eth_price_usd, 2) if eth_price_usd else None,
+            "rewards_usd": round(rewards_eth * eth_price_usd, 2) if eth_price_usd and rewards_eth is not None else None,
             "slashed": slashed,
             "explorer_url": f"https://beaconcha.in/validator/{idx}",
         })
@@ -185,9 +185,16 @@ def check_lukso(lyx_price_usd):
     data = http_get_json(url)
     row = data.get("data")
     if isinstance(row, list):
+        if len(row) > 1:
+            return [], ["❌ LUKSO explorer returned multiple validator rows; coverage unknown"]
         row = row[0] if row else None
     if not row:
         return [], [f"❌ LUKSO `{LUKSO_NICKNAME}` not returned by explorer (possible source issue)"]
+    # The endpoint is scoped to the requested key. Reject contradictory identity
+    # whenever the source supplies it; never discard extra returned rows.
+    source_keys = [row[k] for k in ("pubkey", "publickey", "public_key") if row.get(k)]
+    if any(str(key).lower() != LUKSO_PUBKEY.lower() for key in source_keys):
+        return [], ["❌ LUKSO explorer returned a different validator pubkey; coverage unknown"]
     status = row.get("status", "unknown")
     balance_gwei = int(row.get("balance", 0))
     balance_lyx = balance_gwei / 1e9
@@ -197,6 +204,7 @@ def check_lukso(lyx_price_usd):
         "chain": "lukso",
         "label": LUKSO_NICKNAME,
         "pubkey": LUKSO_PUBKEY,
+        "identity_basis": "response_pubkey" if source_keys else "requested_endpoint",
         "status": status,
         "balance": round(balance_lyx, 6),
         "balance_unit": "LYX",
@@ -209,7 +217,7 @@ def check_lukso(lyx_price_usd):
     issues = []
     if slashed:
         issues.append(f"🚨 *SLASHED* — LUKSO `{LUKSO_NICKNAME}`")
-    elif "active" not in status.lower():
+    elif status not in ("active_online", "active_ongoing"):
         issues.append(f"⚠️ LUKSO `{LUKSO_NICKNAME}` status `{status}`")
     elif balance_gwei < LUKSO_BALANCE_FLOOR_GWEI:
         issues.append(
@@ -217,6 +225,12 @@ def check_lukso(lyx_price_usd):
             f"below floor `{LUKSO_BALANCE_FLOOR_GWEI/1e9} LYX`"
         )
     return [result], issues
+
+
+def complete_sum(rows, field, digits):
+    """Unknown components never become zero or an apparently complete total."""
+    values = [v.get(field) for v in rows]
+    return round(sum(values), digits) if values and all(v is not None for v in values) else None
 
 
 # ── Main ──────────────────────────────────────────────────────────────────────
@@ -249,20 +263,33 @@ def main() -> int:
         state["issues"].append(f"❌ LUKSO explorer fetch failed: `{e}`")
 
     # Roll-up totals for the dashboard.
-    total_value = sum((v.get("value_usd") or 0) for v in state["validators"])
-    total_rewards_usd = sum((v.get("rewards_usd") or 0) for v in state["validators"])
     eth_validators = [v for v in state["validators"] if v["chain"] == "ethereum"]
     lukso_validators = [v for v in state["validators"] if v["chain"] == "lukso"]
+    eth_complete = (len(eth_validators) == len(VALIDATORS_ETH)
+                    and {v.get("index") for v in eth_validators} == set(VALIDATORS_ETH))
+    lukso_complete = (len(lukso_validators) == 1
+                      and lukso_validators[0].get("pubkey") == LUKSO_PUBKEY)
+    all_complete = eth_complete and lukso_complete
+    state["coverage"] = {
+        "eth_expected": len(VALIDATORS_ETH), "eth_returned": len(eth_validators),
+        "lukso_expected": 1, "lukso_returned": len(lukso_validators),
+        "eth_complete": eth_complete, "lukso_complete": lukso_complete,
+        "complete": all_complete,
+    }
+    if not eth_complete:
+        state["issues"].append("❌ ETH coverage incomplete or unexpected/duplicate validator identity; totals unavailable")
+    if not lukso_complete:
+        state["issues"].append("❌ LUKSO coverage incomplete or unexpected/duplicate validator identity; totals unavailable")
     state["totals"] = {
         "validators": len(state["validators"]),
         "eth_count": len(eth_validators),
         "lukso_count": len(lukso_validators),
-        "eth_balance": round(sum(v["balance"] for v in eth_validators), 4),
-        "lyx_balance": round(sum(v["balance"] for v in lukso_validators), 4),
-        "eth_rewards": round(sum(v["rewards"] for v in eth_validators), 4),
-        "lyx_rewards": round(sum(v["rewards"] for v in lukso_validators), 4),
-        "value_usd": round(total_value, 2),
-        "rewards_usd": round(total_rewards_usd, 2),
+        "eth_balance": complete_sum(eth_validators, "balance", 4) if eth_complete else None,
+        "lyx_balance": complete_sum(lukso_validators, "balance", 4) if lukso_complete else None,
+        "eth_rewards": complete_sum(eth_validators, "rewards", 4) if eth_complete else None,
+        "lyx_rewards": complete_sum(lukso_validators, "rewards", 4) if lukso_complete else None,
+        "value_usd": complete_sum(state["validators"], "value_usd", 2) if all_complete else None,
+        "rewards_usd": complete_sum(state["validators"], "rewards_usd", 2) if all_complete else None,
     }
 
     state["status"] = "ok" if not state["issues"] else "alert"
@@ -284,9 +311,11 @@ def main() -> int:
     # YOU get the alert — the safety net against the 35-day silent failure.
     if HEALTHCHECK_URL:
         try:
-            urllib.request.urlopen(HEALTHCHECK_URL, timeout=10).read()
+            ping_url = HEALTHCHECK_URL.rstrip("/") + ("/fail" if state["issues"] else "")
+            urllib.request.urlopen(ping_url, timeout=10).read()
         except Exception as e:
             print(f"[healthcheck-ping-error] {e}", file=sys.stderr)
+            return 1
 
     if state["issues"]:
         return 1

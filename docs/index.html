@@ -249,10 +249,10 @@ async function load() {
     '<div class="sub">' + (t.validators || 0) + ' VALIDATORS</div>'
   ));
 
-  const rewClass = (t.rewards_usd || 0) >= 0 ? 'pl-pos' : 'pl-neg';
+  const rewClass = t.rewards_usd == null ? '' : (t.rewards_usd >= 0 ? 'pl-pos' : 'pl-neg');
   totalsEl.appendChild(el('div', 'tot ' + rewClass,
     '<div class="lbl">BALANCE Δ</div>' +
-    '<div class="val">' + (t.rewards_usd >= 0 ? '+' : '') + usd(t.rewards_usd).replace('$', '$') + '</div>' +
+    '<div class="val">' + (t.rewards_usd != null && t.rewards_usd >= 0 ? '+' : '') + usd(t.rewards_usd).replace('$', '$') + '</div>' +
     '<div class="sub">vs 32.0 BASELINE</div>'
   ));
 
@@ -290,7 +290,7 @@ async function load() {
     if (slashed) { cardCls += ' bad'; statusCls = 'status bad'; }
     else if (!statusOk) { cardCls += ' warn'; statusCls = 'status warn'; }
 
-    const rewardsCls = (v.rewards || 0) >= 0 ? 'rewards pos' : 'rewards neg';
+    const rewardsCls = v.rewards == null ? 'rewards' : (v.rewards >= 0 ? 'rewards pos' : 'rewards neg');
     const card = el('div', cardCls);
 
     card.innerHTML =
@@ -304,7 +304,7 @@ async function load() {
       '<div class="' + rewardsCls + '">' +
         signed(v.rewards) + ' ' + (v.balance_unit || '') +
         ' &nbsp;·&nbsp; ' +
-        (v.rewards_usd >= 0 ? '+' : '') + usd(v.rewards_usd).replace('$', '$') +
+        (v.rewards_usd != null && v.rewards_usd >= 0 ? '+' : '') + usd(v.rewards_usd).replace('$', '$') +
       '</div>' +
       '<div class="' + statusCls + '">' + (slashed ? '⚠ SLASHED' : v.status || 'unknown') + '</div>' +
       '<div style="margin-top:8px;">' +
