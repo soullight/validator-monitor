@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Validator watchdog. Runs every hour via GitHub Actions.
 
-Watches 4 Ethereum + 1 LUKSO validator. No API key needed for any source.
+Watches the owner-confirmed current LUKSO validator; retired ETH is history. No API key needed for any source.
 
 Sources (all free, no auth):
 - ethereum-beacon-api.publicnode.com  →  ETH validator state (status, balance, slashed)
@@ -26,7 +26,8 @@ import urllib.error
 from datetime import datetime, timezone
 
 # ── Config ────────────────────────────────────────────────────────────────────
-VALIDATORS_ETH = [1998923, 1165884, 1998776, 1998777]
+# Owner correction 2026-11-18: only LUKSO is current. Historical ETH snapshot is separate.
+VALIDATORS_ETH = []
 ETH_ACTIVATION_BALANCE = 32.0   # ETH at activation; anything above is rewards
 
 LUKSO_PUBKEY = "0xa2e5a4723655a8baf3411300d3ff3622903b6a7f79f85fc41193bd83f51afa284a2c8d055e2b0c54c7b46871a8f905cf"
@@ -40,7 +41,7 @@ LUKSO_BALANCE_FLOOR_GWEI = 31_800_000_000      # 31.80 LYX
 # Endpoints (no auth on any of these)
 ETH_BEACON  = "https://ethereum-beacon-api.publicnode.com"
 LUKSO_EXPL  = "https://explorer.consensus.mainnet.lukso.network/api/v1"
-PRICE_FEED  = "https://api.coingecko.com/api/v3/simple/price?ids=ethereum,lukso-token-2&vs_currencies=usd"
+PRICE_FEED  = "https://api.coingecko.com/api/v3/simple/price?ids=" + ("ethereum," if VALIDATORS_ETH else "") + "lukso-token-2&vs_currencies=usd"
 
 # Env
 TELEGRAM_TOKEN  = os.environ.get("TELEGRAM_BOT_TOKEN", "")
@@ -125,7 +126,7 @@ def fetch_prices():
     try:
         d = http_get_json(PRICE_FEED)
         return {
-            "eth_usd": float(d["ethereum"]["usd"]),
+            "eth_usd": float(d["ethereum"]["usd"]) if VALIDATORS_ETH else None,
             "lyx_usd": float(d["lukso-token-2"]["usd"]),
         }
     except Exception as e:
@@ -136,6 +137,8 @@ def fetch_prices():
 # ── ETH check ─────────────────────────────────────────────────────────────────
 def check_eth(eth_price_usd):
     """Hit publicnode beacon API for all ETH validators in one call."""
+    if not VALIDATORS_ETH:
+        return [], []  # Never send an empty validator selector to the beacon API.
     ids = ",".join(str(i) for i in VALIDATORS_ETH)
     url = f"{ETH_BEACON}/eth/v1/beacon/states/head/validators?id={ids}"
     data = http_get_json(url)
@@ -244,6 +247,8 @@ def main() -> int:
         "checked_at": now.isoformat(),
         "checked_at_human": now.strftime("%Y-%m-%d %H:%M UTC"),
         "prices": prices,
+        "monitoring_scope": "Current validators only; retired ETH history excluded from alerts and totals",
+        "history_url": "history/retired-eth-20261118.json",
         "validators": [],
         "issues": [],
     }
@@ -284,9 +289,9 @@ def main() -> int:
         "validators": len(state["validators"]),
         "eth_count": len(eth_validators),
         "lukso_count": len(lukso_validators),
-        "eth_balance": complete_sum(eth_validators, "balance", 4) if eth_complete else None,
+        "eth_balance": (complete_sum(eth_validators, "balance", 4) if VALIDATORS_ETH else 0.0) if eth_complete else None,
         "lyx_balance": complete_sum(lukso_validators, "balance", 4) if lukso_complete else None,
-        "eth_rewards": complete_sum(eth_validators, "rewards", 4) if eth_complete else None,
+        "eth_rewards": (complete_sum(eth_validators, "rewards", 4) if VALIDATORS_ETH else 0.0) if eth_complete else None,
         "lyx_rewards": complete_sum(lukso_validators, "rewards", 4) if lukso_complete else None,
         "value_usd": complete_sum(state["validators"], "value_usd", 2) if all_complete else None,
         "rewards_usd": complete_sum(state["validators"], "rewards_usd", 2) if all_complete else None,

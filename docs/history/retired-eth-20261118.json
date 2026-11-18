@@ -1,0 +1,71 @@
+{
+  "source_checked_at": "2026-11-18T03:26:52.748410+00:00",
+  "source_git_blob": "c276d910a1ff871ad771457225f30143208c8c77",
+  "source_snapshot": "pre-lukso-only-state-20261118.json",
+  "source_snapshot_sha256": "d33918d206be9a27fa21d646d1f6292ca02cb088d10ad7d25430ed127bb9c623",
+  "classification": "Retired ETH validators, excluded from current monitoring following owner correction 2026-11-18. Zero remaining validator balances do not establish losses or withdrawal destination. Rewards remain unknown.",
+  "validators": [
+    {
+      "chain": "ethereum",
+      "label": "eth-1165884",
+      "index": 1165884,
+      "status": "withdrawal_done",
+      "balance": 0.0,
+      "balance_unit": "ETH",
+      "rewards": null,
+      "value_usd": 0.0,
+      "rewards_usd": null,
+      "slashed": false,
+      "explorer_url": "https://beaconcha.in/validator/1165884",
+      "observed_at": "2026-11-18T03:26:52.748410+00:00",
+      "historical_not_current": true
+    },
+    {
+      "chain": "ethereum",
+      "label": "eth-1998776",
+      "index": 1998776,
+      "status": "withdrawal_done",
+      "balance": 0.0,
+      "balance_unit": "ETH",
+      "rewards": null,
+      "value_usd": 0.0,
+      "rewards_usd": null,
+      "slashed": false,
+      "explorer_url": "https://beaconcha.in/validator/1998776",
+      "observed_at": "2026-11-18T03:26:52.748410+00:00",
+      "historical_not_current": true
+    },
+    {
+      "chain": "ethereum",
+      "label": "eth-1998777",
+      "index": 1998777,
+      "status": "withdrawal_done",
+      "balance": 0.0,
+      "balance_unit": "ETH",
+      "rewards": null,
+      "value_usd": 0.0,
+      "rewards_usd": null,
+      "slashed": false,
+      "explorer_url": "https://beaconcha.in/validator/1998777",
+      "observed_at": "2026-11-18T03:26:52.748410+00:00",
+      "historical_not_current": true
+    },
+    {
+      "chain": "ethereum",
+      "label": "eth-1998923",
+      "index": 1998923,
+      "status": "withdrawal_done",
+      "balance": 0.0,
+      "balance_unit": "ETH",
+      "rewards": null,
+      "value_usd": 0.0,
+      "rewards_usd": null,
+      "slashed": false,
+      "explorer_url": "https://beaconcha.in/validator/1998923",
+      "observed_at": "2026-11-18T03:26:52.748410+00:00",
+      "historical_not_current": true
+    }
+  ],
+  "observed_at": "2026-11-18T03:26:52.748410+00:00",
+  "historical_not_current": true
+}

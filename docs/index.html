@@ -176,7 +176,7 @@
 
   <div class="head">
     <h1>VALIDATORS</h1>
-    <div class="subtitle">LIVE STATUS · ETHEREUM · LUKSO</div>
+    <div class="subtitle">LIVE STATUS · CURRENT VALIDATOR: LUKSO</div>
     <div class="meta" id="checked-at">LOADING</div>
   </div>
 
@@ -193,7 +193,7 @@
   <div class="err" id="err"></div>
 
   <div class="footer">
-    PUBLICNODE.COM · LUKSO EXPLORER · COINGECKO &nbsp; · &nbsp; HOURLY GITHUB ACTION · AUTO-REFRESH 5 MIN &nbsp; · &nbsp; <a href="state.json" style="color:rgba(255,255,255,0.18);">RAW STATE</a>
+    LUKSO EXPLORER · COINGECKO &nbsp; · &nbsp; HOURLY GITHUB ACTION · AUTO-REFRESH 5 MIN &nbsp; · &nbsp; <a href="state.json" style="color:rgba(255,255,255,0.18);">RAW STATE</a> &nbsp; · &nbsp; <a href="history/retired-eth-20261118.json" style="color:rgba(255,255,255,0.18);">RETIRED ETH HISTORY</a>
   </div>
 
 </div>
@@ -256,7 +256,7 @@ async function load() {
     '<div class="sub">vs 32.0 BASELINE</div>'
   ));
 
-  totalsEl.appendChild(el('div', 'tot',
+  if ((s.coverage && s.coverage.eth_expected || 0) > 0) totalsEl.appendChild(el('div', 'tot',
     '<div class="lbl">ETH STAKED</div>' +
     '<div class="val">' + (t.eth_balance != null ? Number(t.eth_balance).toFixed(3) : '—') + '</div>' +
     '<div class="sub">' + (t.eth_count || 0) + ' VALIDATORS · ' + (s.prices && s.prices.eth_usd ? '$' + Number(s.prices.eth_usd).toFixed(0) + '/ETH' : '') + '</div>'
