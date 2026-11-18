@@ -1,8 +1,6 @@
 name: validator watchdog
 
 on:
-  schedule:
-    - cron: '17 * * * *'   # every hour at :17 (off-the-hour to avoid GH cron congestion)
   workflow_dispatch:        # lets you fire it manually from the Actions tab
 
 permissions:
