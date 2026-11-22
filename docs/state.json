@@ -1,9 +1,9 @@
 {
-  "checked_at": "2026-11-22T10:17:09.817866+00:00",
-  "checked_at_human": "2026-11-22 10:17 UTC",
+  "checked_at": "2026-11-22T11:17:12.593776+00:00",
+  "checked_at_human": "2026-11-22 11:17 UTC",
   "prices": {
     "eth_usd": null,
-    "lyx_usd": 0.249349
+    "lyx_usd": 0.249243
   },
   "monitoring_scope": "Current validators only; retired ETH history excluded from alerts and totals",
   "history_url": "history/retired-eth-20261118.json",
@@ -14,9 +14,9 @@
       "pubkey": "0xa2e5a4723655a8baf3411300d3ff3622903b6a7f79f85fc41193bd83f51afa284a2c8d055e2b0c54c7b46871a8f905cf",
       "identity_basis": "response_pubkey",
       "status": "active_ongoing",
-      "balance": 32.005786,
+      "balance": 32.005986,
       "balance_unit": "LYX",
-      "rewards": 0.005786,
+      "rewards": 0.005986,
       "value_usd": 7.98,
       "rewards_usd": 0.0,
       "slashed": false,
@@ -38,9 +38,9 @@
     "eth_count": 0,
     "lukso_count": 1,
     "eth_balance": 0.0,
-    "lyx_balance": 32.0058,
+    "lyx_balance": 32.006,
     "eth_rewards": 0.0,
-    "lyx_rewards": 0.0058,
+    "lyx_rewards": 0.006,
     "value_usd": 7.98,
     "rewards_usd": 0.0
   },
